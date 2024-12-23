@@ -22,3 +22,17 @@ df = df.drop("deck" , axis = 1)
 
 df = df.dropna()
 df = df.drop_duplicates()
+
+x = df.drop("survived" , axis = 1)
+
+y= df["survived"]
+
+
+cat_col = x.select_dtypes(include=["object"]).columns.tolist()
+num_col = x.select_dtypes(include=[np.number]).columns.tolist()
+
+x_train , x_test ,y_train , y_test = train_test_split(x, y, test_size=0.20 , random_state = 42)
+
+transformer = ColumnTransformer(transformers=[("cat" , OneHotEncoder() , cat_col), ("num" , StandardScaler() , num_col)])
+
+pipeline = Pipeline(steps=[("transformer" , transformer), ("classifier" , LogisticRegression())])
