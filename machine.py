@@ -14,4 +14,11 @@ df = sns.load_dataset("titanic")
 data_dir = "data" 
 os.makedirs(data_dir , exist_ok = True)
 file_path = os.path.join(data_dir , "sample.csv")
-df.to_csv(data_dir , index = False)
+df.to_csv(file_path , index = False)
+
+df.isnull().sum()
+
+df = df.drop("deck" , axis = 1)
+
+df = df.dropna()
+df = df.drop_duplicates()
